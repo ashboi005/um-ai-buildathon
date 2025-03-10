@@ -10,6 +10,11 @@ load_dotenv()
 
 def configure_app(app: Flask): 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')   
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 280,
+    'connect_args': {'sslmode': 'require'}
+}
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SWAGGER'] = {
         'title': 'Your API',
