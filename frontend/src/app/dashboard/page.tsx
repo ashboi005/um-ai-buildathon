@@ -22,7 +22,7 @@ export default function StudentDashboard() {
     e.preventDefault();
     setLoading(true);
   
-    const API_URL = process.env.NEXT_PUBLIC_API_URL + "ai/generate_test";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL + "/ai/generate_test";
   
     console.log("🚀 Submitting Test Generation Request with Data:", formData);
     console.log("🌐 API URL:", API_URL);
@@ -30,23 +30,20 @@ export default function StudentDashboard() {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        credentials: "include", // This is now a top-level property
+        credentials: "include", // If your backend requires cookie-based sessions
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      
   
       if (response.ok) {
         const data = await response.json();
         console.log("✅ Test Generated Successfully:", data);
   
-        if (data.test_id) {
-          console.log("➡️ Redirecting to Test ID:", data.test_id);
-          router.push(`/student-dashboard/take-test/${data.test_id}`); // Redirect
-        } else {
-          console.error("❌ No test_id returned:", data);
-          alert("Test generated but no test ID returned.");
-        }
+        // Save the generated test to localStorage
+        localStorage.setItem("currentTest", JSON.stringify(data));
+  
+        // Redirect to /test-page
+        router.push("/test-page");
       } else {
         const errorData = await response.json();
         console.error("❌ Failed API Response:", errorData);
@@ -59,6 +56,7 @@ export default function StudentDashboard() {
       setLoading(false);
     }
   };
+  
   
 
   const dashboardItems: BentoItem[] = [
