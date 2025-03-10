@@ -3,6 +3,7 @@
 **Team:** Cracked Nerds
 
 ## Deployed Live Website: 
+## Backend API Documentation: https://um-ai-buildathon.onrender.com/apidocs
 
 ## Project Overview
 
