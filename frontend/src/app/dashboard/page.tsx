@@ -22,7 +22,7 @@ export default function StudentDashboard() {
     e.preventDefault();
     setLoading(true);
   
-    const API_URL = process.env.NEXT_PUBLIC_API_URL + "/ai/generate_test";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL + "ai/generate_test";
   
     console.log("🚀 Submitting Test Generation Request with Data:", formData);
     console.log("🌐 API URL:", API_URL);
