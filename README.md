@@ -2,7 +2,7 @@
 
 **Team:** Cracked Nerds
 
-## Deployed Live Website: upskill-quiz-maker.vercel.app
+## Deployed Live Website: https://upskill-quiz-maker.vercel.app
 ## Backend API Documentation: https://um-ai-buildathon.onrender.com/apidocs
 
 ## Project Overview
