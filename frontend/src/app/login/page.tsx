@@ -15,38 +15,46 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
-  const { setUser } = useUser();
+  const { setUser } = useUser(); // Optional: If you want to store user data in context
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+    setError(null);
+
     try {
+      // IMPORTANT: credentials: "include" so the browser accepts/sends cookies
       const res = await fetch(`${apiBaseUrl}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include", // <-- crucial for sending/receiving session cookies
       });
-  
+
       const data = await res.json();
-  
-      if (res.ok) {
-        console.log("Login successful!", data);
-  
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setUser(data.user); // Set user in context
-  
-        router.push("/dashboard");
-      } else {
+
+      if (!res.ok) {
         console.log("Login error response:", data);
         setError(data.message || "Invalid email or password.");
+        return;
       }
+
+      // Login successful: The server should have set a session cookie in the response
+      console.log("Login successful!", data);
+
+      // If the server returned user info, optionally store it in context
+      if (data.user) {
+        setUser(data.user);
+      }
+
+      // Redirect to dashboard or wherever you want
+      router.push("/dashboard");
+
     } catch (err) {
       console.log("Login network error:", err);
       setError("Something went wrong. Please try again later.");
     }
   };
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

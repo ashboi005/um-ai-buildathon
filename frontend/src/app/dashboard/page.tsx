@@ -30,9 +30,11 @@ export default function StudentDashboard() {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
+        credentials: "include", // This is now a top-level property
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData), // ✅ Correct JSON format
+        body: JSON.stringify(formData),
       });
+      
   
       if (response.ok) {
         const data = await response.json();
