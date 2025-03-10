@@ -102,6 +102,8 @@ def generate_test_route():
         db.session.add(new_test)
         db.session.commit()
 
+        print(session)
+        
         return jsonify({'message': 'Test generated successfully', 'test': test_data}), 201
 
     except json.JSONDecodeError as e:
@@ -157,6 +159,7 @@ def get_my_tests():
             'created_at': test.created_at
         })
 
+    print(session)
     return jsonify({'tests': tests_list}), 200
 
 @swag_from({
@@ -234,5 +237,7 @@ def get_single_test(test_id):
         'test_data': test.test_data,
         'created_at': test.created_at
     }
+
+    print(session)
 
     return jsonify(test_info), 200

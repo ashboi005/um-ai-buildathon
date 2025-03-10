@@ -143,7 +143,7 @@ def login():
     if not user or not check_password_hash(user.password, password):
         return jsonify({'error': 'Invalid credentials'}), 401
 
-    # Set up the session for the logged-in user
     session['user_id'] = user.id
+    print(session)
 
     return jsonify({'message': 'Login successful'}), 200

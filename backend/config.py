@@ -22,6 +22,10 @@ def configure_app(app: Flask):
     }
     app.config['SCHEDULER_API_ENABLED'] = True
     app.secret_key='ncq8ur271bGFR5a9GR69n239ybAFf20B1*21@'
+    app.config.update(
+    SESSION_COOKIE_SAMESITE='None',
+    SESSION_COOKIE_SECURE=True  
+)
 
     db.init_app(app)    
     Swagger(app)    
